@@ -1,0 +1,6 @@
+.vscode/
+data/
+game.exe
+hsptmp
+*.hsp
+obj
