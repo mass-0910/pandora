@@ -1,4 +1,4 @@
-#include "DxLib/DxLib.h"
+#include <DxLib.h>
 #include "define.h"
 #include "note.h"
 #include "event.h"
@@ -6,7 +6,7 @@
 #include "menu.h"
 #include "input.h"
 #include "battleScene.h"
-#include <bits/stdc++.h>
+#include <stdio.h>
 
 int font_mes;
 bool initflag = true;
@@ -89,16 +89,16 @@ void walkMainInit(char *mapname, int& mapmaxX, int& mapmaxY, MAP map[MAPMAX + 2]
 }
 
 int WINAPI WinMain(
-	HINSTANCE hInstance, 
-	HINSTANCE hPrevInstance, 
-	LPSTR lpCmdLine, 
+	HINSTANCE hInstance,
+	HINSTANCE hPrevInstance,
+	LPSTR lpCmdLine,
 	int nCmdShow)
 {
 
     MAP map[MAPMAX + 2][MAPMAX + 2];
     ENEMY enemy[EMAX];
     PLAYER player;
-    BattleScene battleScene;
+    BATTLEDATA bdata;
     int wincenterX, wincenterY;
     int chipdata[CHIPMAXNUM];
     int mapmaxX, mapmaxY;
@@ -233,9 +233,10 @@ int WINAPI WinMain(
     gamemode gamescene = mapwalk;
 
     puts("素材ファイルのロード完了");
-    
+
     EventManager eventmanager(&cameraX, &cameraY, &player, &shadowrate, music_handle, windowGraphic, spriteGraphic, &itemdatabuf, itemGraphic, arrowGraphic, mapname);
     Menu menu(&player, &itemdatabuf, &shadowrate, windowGraphic, buffer_handle, music_handle);
+    BattleScene battleScene(buffer_handle, music_handle, map, windowGraphic);
 
     puts("イベントのロード完了");
 
@@ -243,19 +244,8 @@ int WINAPI WinMain(
         ClearDrawScreen();
 		SetDrawScreen(DX_SCREEN_BACK);
 
-        if(gamescene == mapwalk){
-            
-            if(initflag == true){
-                puts("移動フェイズの初期化開始");
-                walkMainInit(mapname, mapmaxX, mapmaxY, map, eventmanager, music_handle, chipdata, encountflag, encountwalknum);
-                walkable = true;
-                walkablecopy = true;
-                walknum = 0;
-                initflag = false;
-                puts("移動フェイズの初期化完了");
-            }
-
-            //マップ描画
+        //マップ描画
+        if(!initflag){
             int camposX, camposY;
             camposX = (int)(cameraX / MAPCHIP);
             camposY = (int)(cameraY / MAPCHIP);
@@ -278,6 +268,19 @@ int WINAPI WinMain(
                         }
                     }
                 }
+            }
+        }
+
+        if(gamescene == mapwalk){
+
+            if(initflag){
+                puts("移動フェイズの初期化開始");
+                walkMainInit(mapname, mapmaxX, mapmaxY, map, eventmanager, music_handle, chipdata, encountflag, encountwalknum);
+                walkable = true;
+                walkablecopy = true;
+                walknum = 0;
+                initflag = false;
+                puts("移動フェイズの初期化完了");
             }
 
             //イベント画像
@@ -478,6 +481,9 @@ int WINAPI WinMain(
             }
 
         }else if(gamescene == battle){
+            if(initflag){
+                // bdata.backPicHandle =
+            }
             battleScene.update();
             battleScene.draw();
         }

@@ -1,7 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "DxLib/DxLib.h"
+#include <DxLib.h>
 #include "struct.h"
 #include "note.h"
 #include "sysbutton.h"

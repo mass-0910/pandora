@@ -1,7 +1,7 @@
 #include "event.h"
 #include "note.h"
 #include "makewindow.h"
-#include "DxLib/DxLib.h"
+#include <DxLib.h>
 #include "input.h"
 
 extern int font_mes;
@@ -175,7 +175,7 @@ void EventManager::eventLoad(char *mapname){
         strncpy(line, eventtext.noteget(searchtag(eventtext, tag)), 1024);
         getstr(tmpstr, line, 1);
         event[cnt].pagenum = atoi(tmpstr);
-        
+
         sprintf(tag, "eve%d\nflagnum", cnt);
         strncpy(line, eventtext.noteget(searchtag(eventtext, tag)), 1024);
         for(int ccnt = 0; ccnt < event[cnt].pagenum; ccnt++){
@@ -488,7 +488,7 @@ void EventManager::runEvent(bool& oktrigger){
         oktrigger = false;
         nextline = true;
     }else{
-        nextline = true; 
+        nextline = true;
     }
 
     if(nextline){
@@ -673,7 +673,7 @@ void EventManager::shop(char *runeventline){
                 break;
         }
     }
-    if(xbutton && buy == 0 && sell == 0){    
+    if(xbutton && buy == 0 && sell == 0){
         PlaySoundMem(musicHandle[52], DX_PLAYTYPE_BACK);
         nextline = true;
         shopping = false;

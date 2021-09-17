@@ -1,7 +1,10 @@
 #ifndef NOTE_H
 #define NOTE_H
 
-#include "bits/stdc++.h"
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <string>
 
 char *getstr(char *buf, char *str, int num, char split_character = ',');
 

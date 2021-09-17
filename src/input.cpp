@@ -1,5 +1,5 @@
 #include "input.h"
-#include "DxLib/DxLib.h"
+#include <DxLib.h>
 
 int checkInput(int inputType){
     if(GetJoypadNum() != 0){

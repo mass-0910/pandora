@@ -1,7 +1,7 @@
 #ifndef SYSBUTTON_H
 #define SYSBUTTON_H
 
-#include "DxLib/DxLib.h"
+#include <DxLib.h>
 
 class SysButton{
     public:

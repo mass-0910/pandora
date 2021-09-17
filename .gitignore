@@ -4,3 +4,5 @@ game.exe
 hsptmp
 *.hsp
 obj
+bin/
+*.pdb

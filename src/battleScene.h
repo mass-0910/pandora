@@ -3,7 +3,7 @@
 
 #include "struct.h"
 #include "define.h"
-#include "DxLib/DxLib.h"
+#include <DxLib.h>
 
 typedef enum{
     wait,
@@ -12,9 +12,9 @@ typedef enum{
 }CHARACTER_STATE;
 
 typedef enum{
-    command,
-    attack,
-    result,
+    phase_command,
+    phase_attack,
+    phase_result,
 }BATTLE_PHASE;
 
 //味方キャラクター情報をうまいことゲームに反映するクラス
@@ -39,7 +39,7 @@ class PlayerCharacter{
         void update(){
 
             frame++;
-        
+
         };
 
         //描画
@@ -54,6 +54,14 @@ class PlayerCharacter{
             }
 
         };
+
+        void end(){
+            //アニメ画像削除
+            for(int i = 0; i < 4; i++){
+                DeleteGraph(anime_image[i]);
+                DeleteGraph(anime_attackImage[i]);
+            }
+        }
     private:
         PLAYER_CHARACTER character_data;
         CHARACTER_STATE state;
@@ -73,13 +81,18 @@ typedef struct{
 
 class BattleScene{
     public:
+        BattleScene(int *buffer_handle, int *music_handle, MAP map[MAPMAX + 2][MAPMAX + 2], int *windowGraphic);
         void init(BATTLEDATA bdata);
         void update();
         void draw();
+        void end();
     private:
         BATTLEDATA bdata;
-        PlayerCharacter character[4];
+        PlayerCharacter *character[4];
         BATTLE_PHASE phase;
+        int *buffer_handle, *music_handle;
+        MAP (*map)[MAPMAX + 2];
+        int *windowGraphic;
 };
 
 #endif

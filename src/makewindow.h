@@ -1,7 +1,7 @@
 #ifndef MAKEWINDOW_H
 #define MAKEWINDOW_H
 
-#include "DxLib/DxLib.h"
+#include <DxLib.h>
 #include "define.h"
 
 extern int font_mes;
